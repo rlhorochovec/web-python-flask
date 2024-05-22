@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Mutantes</h1>
-<table>
-    <tr>
-        <th>Nome</th>
-        <th>Codinome</th>
-        <th>Alterar</th>
-        <th>Deletar</th>
-    </tr>
-{% for mutante in mutantes %}
-    <tr>
-        <td><a href="/xmen/{{mutante.mutante_id}}">{{mutante.codinome}}</a></td>
-        <td>{{mutante.nome}}</td>
-        <td><a href="/xmen/{{mutante.mutante_id}}/update">Editar</a></td>
-        <td><a href="/xmen/{{mutante.mutante_id}}/delete">Excluir</a></td>
-    </tr>
-{% endfor %}
+<h1 class="display-3">Mutantes</h1>
+<hr />
+<h1></h1>
+<table class="table table-striped table-hover">
+   <thead>
+      <tr>
+         <th scope="col">Codinome</th>
+         <th scope="col">Nome</th>
+         <th scope="col">Alterar</th>
+         <th scope="col">Deletar</th>
+      </tr>
+   </thead>
+   <tbody>
+      {% for mutante in mutantes %}
+      <tr>
+         <td><a href="/xmen/{{mutante.mutante_id}}">{{mutante.codinome}}</a></td>
+         <td>{{mutante.nome}}</td>
+         <td><a href="/xmen/{{mutante.mutante_id}}/update">Editar</a></td>
+         <td><a href="/xmen/{{mutante.mutante_id}}/delete">Excluir</a></td>
+      </tr>
+      {% endfor %}
+   </tbody>
 </table>
 {% endblock %}

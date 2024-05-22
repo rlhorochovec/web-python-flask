@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Confirme a exclusão</h2>
-    <form action='' method="post">
-        Deseja excluir?
-        <input type = "submit" value="Sim">
-        <a href='/xmen'>Não</a>
-    </form>
+<h1 class="display-3">Confirme a exclusão</h1>
+<hr />
+<form action='' method="post">
+   <h1 class="display-6">Tem certeza que deseja excluir?</h1>
+   <div class="d-grid gap-2 d-md-block">
+      <button type="submit" class="btn btn-danger btn-lg" role="button">Sim</a></button>
+      <a href="/xmen" class="btn btn-success btn-lg" role="button">Não</a>
+   </div>
+</form>
 {% endblock %}
