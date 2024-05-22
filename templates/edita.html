@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Editar mutante</h2>
+  <form action='' method = "POST">
+    <table>
+      <tr><td>Nome</td><td><input type = "text" name = "nome" value="{{mutante.nome}}" /></td></tr>
+      <tr><td>Codinome</td><td><input type = "text" name = "codinome" value="{{mutante.codinome}}" /></td></tr>
+    </table>
+    <p><input type = "submit" value = "Salvar" /></p>
+  </form>
+{% endblock %}

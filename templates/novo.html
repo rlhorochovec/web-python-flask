@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Adicionar mutante</h2>
+  <form action='' method="POST">
+    <table>
+      <tr><td>Mutante ID</td><td><input type = "integer" name = "mutante_id" /></td></tr>
+      <tr><td>Nome</td><td><input type="text" name="nome" /></td></tr>
+      <tr><td>Codinome</td><td><input type="text" name="codinome" /></td></tr>
+    </table>
+    <p><input type="submit" value="Salvar" /></p>
+  </form>
+{% endblock %}
