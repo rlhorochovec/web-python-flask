@@ -1,6 +1,10 @@
-<h3>Id</h3>
-<p>{{mutante.mutante_id}}</p><hr>
-<h3>Nome</h3>
-<p>{{mutante.nome}}</p><hr>
-<h3>Codinome</h3>
-<p>{{mutante.codinome}}</p><hr>
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Detalhes</h2>
+    <table>
+        <tr><td>ID</td><td>{{mutante.mutante_id}}</td></tr>
+        <tr><td>Nome</td><td>{{mutante.nome}}</td></tr>
+        <tr><td>Codinome</td><td>{{mutante.codinome}}</td></tr>
+    </table>
+{% endblock %}
+

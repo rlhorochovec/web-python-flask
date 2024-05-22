@@ -1,5 +1,9 @@
-<form action='' method="post">
-    Click YES to confirm
-    <input type = "submit" value="YES">
-    <a href='/xmen'>Cancel</a>
-</form>
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Confirme a exclusão</h2>
+    <form action='' method="post">
+        Deseja excluir?
+        <input type = "submit" value="Sim">
+        <a href='/xmen'>Não</a>
+    </form>
+{% endblock %}

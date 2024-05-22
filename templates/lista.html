@@ -1,3 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Mutantes</h1>
+<table>
+    <tr>
+        <th>Nome</th>
+        <th>Codinome</th>
+        <th>Alterar</th>
+        <th>Deletar</th>
+    </tr>
 {% for mutante in mutantes %}
-<h3>{{mutante}}</h3><hr>
+    <tr>
+        <td><a href="/xmen/{{mutante.mutante_id}}">{{mutante.codinome}}</a></td>
+        <td>{{mutante.nome}}</td>
+        <td><a href="/xmen/{{mutante.mutante_id}}/update">Editar</a></td>
+        <td><a href="/xmen/{{mutante.mutante_id}}/delete">Excluir</a></td>
+    </tr>
 {% endfor %}
+</table>
+{% endblock %}
