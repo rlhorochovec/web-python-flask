@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>Editar mutante</h2>
-  <form action='' method = "POST">
-    <table>
-      <tr><td>Nome</td><td><input type = "text" name = "nome" value="{{mutante.nome}}" /></td></tr>
-      <tr><td>Codinome</td><td><input type = "text" name = "codinome" value="{{mutante.codinome}}" /></td></tr>
-    </table>
-    <p><input type = "submit" value = "Salvar" /></p>
-  </form>
+<h1 class="display-3">Editar mutante</h1>
+<hr />
+<form action='' method="POST">
+   <div class="row">
+      <label for="nome" class="col-sm-2 col-form-label col-form-label-lg">Nome</label>
+      <div class="col-sm-6">
+         <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{mutante.nome}}">
+      </div>
+   </div>
+   <br />
+   <div class="row">
+      <label for="codinome" class="col-sm-2 col-form-label col-form-label-lg">Codinome</label>
+      <div class="col-sm-6">
+         <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome" value="{{mutante.codinome}}">
+      </div>
+   </div>
+   <p><button type="submit" class="btn btn-primary btn-lg">Salvar</button></p>
+</form>
 {% endblock %}
