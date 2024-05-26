@@ -10,11 +10,13 @@ class MutanteModel(db.Model):
     mutante_id = db.Column(db.Integer(), unique=True)
     nome = db.Column(db.String())
     codinome = db.Column(db.String())
+    imagem = db.Column(db.String())
 
-    def __init__(self, mutante_id, nome, codinome):
+    def __init__(self, mutante_id, nome, codinome, imagem):
         self.mutante_id = mutante_id
         self.nome = nome
         self.codinome = codinome
+        self.imagem = imagem
 
     def __repr__(self):
         return f"{self.nome} | {self.codinome}"

@@ -4,6 +4,13 @@
 <hr />
 <form action='' method="POST">
    <div class="row">
+      <label for="imagem" class="col-sm-2 col-form-label col-form-label-lg">Imagem</label>
+      <div class="col-sm-6">
+         <input class="form-control form-control-lg" id="imagem" type="file" name="imagem" accept=".jpg, .jpeg, .png" value="{{mutante.imagem}}">
+      </div>
+   </div>
+   <br />
+   <div class="row">
       <label for="nome" class="col-sm-2 col-form-label col-form-label-lg">Nome</label>
       <div class="col-sm-6">
          <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{mutante.nome}}">

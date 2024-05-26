@@ -1,3 +1,5 @@
+import os
+import uuid
 from flask import Flask, render_template, request, redirect
 from models import db, MutanteModel
 
@@ -5,6 +7,7 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///xmen97.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["UPLOAD_FOLDER"] = "static/uploads"
 db.init_app(app)
 
 
@@ -22,7 +25,12 @@ def create():
         mutante_id = request.form["mutante_id"]
         nome = request.form["nome"]
         codinome = request.form["codinome"]
-        mutante = MutanteModel(mutante_id=mutante_id, nome=nome, codinome=codinome)
+        arquivo = request.files['imagem']
+        arquivo_nome = arquivo.filename
+        arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
+        arquivo_novo_nome = uuid.uuid4().hex +'.'+arquivo_extensao
+        arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], arquivo_novo_nome))
+        mutante = MutanteModel(mutante_id=mutante_id, nome=nome, codinome=codinome, imagem=arquivo_novo_nome)
         db.session.add(mutante)
         db.session.commit()
         return redirect("/xmen")
@@ -39,7 +47,7 @@ def detail(id):
     mutante = MutanteModel.query.filter_by(mutante_id=id).first()
     if mutante:
         return render_template("info.html", mutante=mutante)
-    return f"Mutante with id ={id} Doenst exist"
+    return f"Mutante com ID = {id} não foi encontrado."
 
 
 @app.route("/xmen/<int:id>/update", methods=["GET", "POST"])
@@ -51,11 +59,16 @@ def update(id):
             db.session.commit()
             nome = request.form["nome"]
             codinome = request.form["codinome"]
-            mutante = MutanteModel(mutante_id=id, nome=nome, codinome=codinome)
+            arquivo = request.files['imagem']
+            arquivo_nome = arquivo.filename
+            arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
+            arquivo_novo_nome = uuid.uuid4().hex +'.'+arquivo_extensao
+            arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], arquivo_novo_nome))
+            mutante = MutanteModel(mutante_id=id, nome=nome, codinome=codinome, imagem=arquivo_novo_nome)
             db.session.add(mutante)
             db.session.commit()
             return redirect(f"/xmen/{id}")
-        return f"Mutante with id = {id} Does nit exist"
+        return f"Mutante com ID = {id} não foi encontrado."
 
     return render_template("edita.html", mutante=mutante)
 
