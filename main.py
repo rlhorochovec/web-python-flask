@@ -1,5 +1,6 @@
 import os
 import uuid
+from PIL import Image
 from flask import Flask, render_template, request, redirect
 from models import db, MutanteModel
 
@@ -26,15 +27,17 @@ def create():
         nome = request.form["nome"]
         codinome = request.form["codinome"]
         arquivo = request.files['imagem']
-        arquivo_nome = arquivo.filename
-        arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
-        arquivo_novo_nome = uuid.uuid4().hex +'.'+arquivo_extensao
-        arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], arquivo_novo_nome))
-        mutante = MutanteModel(mutante_id=mutante_id, nome=nome, codinome=codinome, imagem=arquivo_novo_nome)
+        imagem = uuid.uuid4().hex +'.'+ arquivo.filename.rsplit('.', 1)[1].lower()
+        arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
+        mutante = MutanteModel(mutante_id=mutante_id, nome=nome, codinome=codinome, imagem=imagem)
         db.session.add(mutante)
         db.session.commit()
         return redirect("/xmen")
 
+
+@app.route("/")
+def index():
+    return redirect("/xmen")
 
 @app.route("/xmen")
 def list():
@@ -60,11 +63,9 @@ def update(id):
             nome = request.form["nome"]
             codinome = request.form["codinome"]
             arquivo = request.files['imagem']
-            arquivo_nome = arquivo.filename
-            arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
-            arquivo_novo_nome = uuid.uuid4().hex +'.'+arquivo_extensao
-            arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], arquivo_novo_nome))
-            mutante = MutanteModel(mutante_id=id, nome=nome, codinome=codinome, imagem=arquivo_novo_nome)
+            imagem = uuid.uuid4().hex +'.'+ arquivo.filename.rsplit('.', 1)[1].lower()
+            arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
+            mutante = MutanteModel(mutante_id=id, nome=nome, codinome=codinome, imagem=imagem)
             db.session.add(mutante)
             db.session.commit()
             return redirect(f"/xmen/{id}")
