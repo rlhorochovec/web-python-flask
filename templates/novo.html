@@ -2,7 +2,7 @@
 {% block content %}
 <h1 class="display-3">Adicionar mutante</h1>
 <hr />
-<form action='' method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data">
    <div class="row">
       <label for="imagem" class="col-sm-2 col-form-label col-form-label-lg">Imagem</label>
       <div class="col-sm-6">
@@ -11,9 +11,9 @@
    </div>
    <br />
    <div class="row">
-      <label for="mutante_id" class="col-sm-2 col-form-label col-form-label-lg">Mutante ID</label>
+      <label for="codinome" class="col-sm-2 col-form-label col-form-label-lg">Codinome</label>
       <div class="col-sm-6">
-         <input type="text" class="form-control form-control-lg" id="mutante_id" placeholder="ID"  name="mutante_id">
+         <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome">
       </div>
    </div>
    <br />
@@ -24,12 +24,6 @@
       </div>
    </div>
    <br />
-   <div class="row">
-      <label for="codinome" class="col-sm-2 col-form-label col-form-label-lg">Codinome</label>
-      <div class="col-sm-6">
-         <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome">
-      </div>
-   </div>
    <p><button type="submit" class="btn btn-primary btn-lg">Salvar</button></p>
 </form>
 {% endblock %}
