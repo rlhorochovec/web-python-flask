@@ -2,11 +2,11 @@
 {% block content %}
 <h1 class="display-3">Editar mutante</h1>
 <hr />
-<form action='' method="POST">
+<form action="" method="POST">
    <div class="row">
-      <label for="nome" class="col-sm-2 col-form-label col-form-label-lg">Nome</label>
+      <label for="imagem" class="col-sm-2 col-form-label col-form-label-lg">Imagem</label>
       <div class="col-sm-6">
-         <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{mutante.nome}}">
+         <input class="form-control form-control-lg" id="imagem" type="file" name="imagem" accept=".jpg, .jpeg, .png" value="{{mutante.imagem}}">
       </div>
    </div>
    <br />
@@ -16,6 +16,14 @@
          <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome" value="{{mutante.codinome}}">
       </div>
    </div>
+   <br />
+   <div class="row">
+      <label for="nome" class="col-sm-2 col-form-label col-form-label-lg">Nome</label>
+      <div class="col-sm-6">
+         <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{mutante.nome}}">
+      </div>
+   </div>
+   <br />
    <p><button type="submit" class="btn btn-primary btn-lg">Salvar</button></p>
 </form>
 {% endblock %}

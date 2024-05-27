@@ -1,9 +1,6 @@
 # web-python-flask
 Projeto Web utilizando Python com Flask e SQLite.
 
+
 ## Screenshots
-<img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/lista.PNG" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/adicionar.PNG" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/detalhes.PNG" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/editar.PNG" width="400" />
-
-## Vídeos dos testes automatizados
-https://github.com/rlhorochovec/web-python-flask/assets/6693610/9314f146-3d30-4052-97d5-4f1c2edcb358
-
+<img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/lista.png" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/detalhes.png" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/novo.png" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/editar.png" width="400" /> <img src="https://github.com/rlhorochovec/web-python-flask/blob/develop/screenshots/excluir.png" width="400" />

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="display-3">Detalhes</h1>
+<hr />
+<div class="card text-dark bg-light mb-3" style="width: 24rem;">
+   <img src="{{url_for('static', filename='uploads/'+mutante.imagem)}}" class="card-img-top" width="200" alt="{{mutante.codinome}}">
+   <div class="card-body">
+      <ul class="list-group list-group-flush">
+         <li class="list-group-item"><h1 class="display-5">{{mutante.codinome}}</h1></li>
+         <li class="list-group-item"><p class="card-title">{{mutante.nome}}</p></li>
+       </ul>
+       <div class="card-footer text-muted">
+     <a href="/xmen" class="card-link">Voltar</a>
+     </div>
+   </div>
+ </div>
+{% endblock %}
