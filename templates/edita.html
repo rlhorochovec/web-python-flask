@@ -2,25 +2,28 @@
 {% block content %}
 <h1 class="display-3">Editar mutante</h1>
 <hr />
+{% for message in get_flashed_messages() %}
+   <div class="alert alert-danger" role="alert">{{ message }}</div>
+{% endfor %}
 <form action="" method="POST">
    <div class="row">
       <label for="imagem" class="col-sm-2 col-form-label col-form-label-lg">Imagem</label>
       <div class="col-sm-6">
-         <input class="form-control form-control-lg" id="imagem" type="file" name="imagem" accept=".jpg, .jpeg, .png" value="{{mutante.imagem}}">
+         <input type="file" class="form-control form-control-lg" id="imagem" placeholder="Imagem"  name="imagem" value="{{ mutante['imagem'] }}">
       </div>
    </div>
    <br />
    <div class="row">
       <label for="codinome" class="col-sm-2 col-form-label col-form-label-lg">Codinome</label>
       <div class="col-sm-6">
-         <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome" value="{{mutante.codinome}}">
+         <input type="text" class="form-control form-control-lg" id="codinome" placeholder="Codinome"  name="codinome" value="{{ mutante['codinome'] }}">
       </div>
    </div>
    <br />
    <div class="row">
       <label for="nome" class="col-sm-2 col-form-label col-form-label-lg">Nome</label>
       <div class="col-sm-6">
-         <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{mutante.nome}}">
+         <input type="text" class="form-control form-control-lg" id="nome" placeholder="Nome"  name="nome" value="{{ mutante['nome'] }}">
       </div>
    </div>
    <br />
