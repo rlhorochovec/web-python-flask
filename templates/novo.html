@@ -4,7 +4,7 @@
 <hr />
 <form action="" method="POST" enctype="multipart/form-data">
    {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger" role="alert">{{ message }}</div>
+   <div class="alert alert-danger" role="alert">{{ message }}</div>
    {% endfor %}
    <div class="row">
       <label for="imagem" class="col-sm-2 col-form-label col-form-label-lg">Imagem</label>
