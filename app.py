@@ -1,74 +1,105 @@
+from datetime import datetime
 import os
+import sqlite3
 import uuid
-from flask import Flask, render_template, request, redirect, url_for
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from database_config import Base, Mutante
+from flask import Flask, render_template, request, redirect, url_for, flash, abort
 
-app=Flask(__name__)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'e450cd13-c929-4667-9d63-7403e143d129'
 app.config["UPLOAD_FOLDER"] = "static/uploads"
 
-engine = create_engine('sqlite:///database/xmen97.db')
 
-Base.metadata.bind = engine
+def get_db_connection():
+    conn = sqlite3.connect("database/xmen97.db")
+    conn.row_factory = sqlite3.Row
+    return conn
 
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
 
-#Function to list
-@app.route('/')
-@app.route('/xmen')
-def list():
-   mutantes = session.query(Mutante).all()
-   return render_template("lista.html", mutantes=mutantes)
+@app.route("/")
+@app.route("/xmen")
+def index():
+    conn = get_db_connection()
+    mutantes = conn.execute("SELECT * FROM mutantes").fetchall()
+    conn.close()
+    return render_template("lista.html", mutantes=mutantes)
 
-#Function to add
-@app.route('/xmen/add',methods=['GET','POST'])
+
+@app.route("/xmen/add", methods=("GET", "POST"))
 def add():
-   if request.method == 'POST':
-       imagem = uuid.uuid4().hex +'.'+ request.files['imagem'].filename.rsplit('.', 1)[1].lower()
-       request.files['imagem'].save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
-       novo_mutante = Mutante(nome = request.form['nome'], codinome = request.form['codinome'], imagem = imagem)
-       session.add(novo_mutante)
-       session.commit()
-       return redirect(url_for('list'))
-   else:
-       return render_template('novo.html')
+    if request.method == "POST":
+        nome = request.form["nome"]
+        codinome = request.form["codinome"]
+        
+        arquivo = request.files['imagem']
+        arquivo_nome = arquivo.filename
+        arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
+        imagem = str(uuid.uuid4()) +'.'+ arquivo_extensao
+        arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
 
-#Function to edit
-@app.route("/xmen/<int:mutante_id>/edit", methods = ['GET', 'POST'])
-def update(mutante_id):
-   edita_mutante = session.query(Mutante).filter_by(id=mutante_id).one()
-   if request.method == 'POST':
-       if edita_mutante:
-           edita_mutante.nome = request.form['nome']
-           edita_mutante.codinome = request.form['codinome']
-           imagem = uuid.uuid4().hex +'.'+ request.files['imagem'].filename.rsplit('.', 1)[1].lower()
-           request.files['imagem'].save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
-           edita_mutante.imagem = request.form['imagem']
-           return redirect(url_for('list'))
-   else:
-       return render_template('edita.html', mutante = edita_mutante)
-   
-#Function to detail   
-@app.route("/xmen/<int:mutante_id>")
-def detail(mutante_id):
-    info_mutante = session.query(Mutante).filter_by(id=mutante_id).one()
-    if info_mutante:
-        return render_template("detalhe.html", mutante=info_mutante)
-    else:
-        return redirect(url_for('list'))
+        if not nome:
+            flash("Nome é obrigatório!")
+        elif not codinome:
+            flash("Codinome é obrigatório!")
+        else:
+            conn = get_db_connection()
+            conn.execute(
+                "INSERT INTO mutantes (nome, codinome, imagem) VALUES (?, ?, ?)",
+                (nome, codinome, imagem),
+            )
+            conn.commit()
+            conn.close()
+            return redirect(url_for("index"))
 
-#Function to delete
-@app.route('/xmen/<int:mutante_id>/delete', methods = ['GET','POST'])
-def delete(mutante_id):
-   deleta_mutante = session.query(Mutante).filter_by(id=mutante_id).one()
-   if request.method == 'POST':
-       session.delete(deleta_mutante)
-       session.commit()
-       return redirect(url_for('list', mutante_id=mutante_id))
-   else:
-       return render_template('deleta.html',mutante = deleta_mutante)
+    return render_template("novo.html")
 
-if __name__ == '__main__':
-   app.run()
+def get_mutante(mutante_id):
+    conn = get_db_connection()
+    mutante = conn.execute('SELECT * FROM mutantes WHERE id = ?',
+                        (mutante_id,)).fetchone()
+    conn.close()
+    if mutante is None:
+        abort(404)
+    return mutante
+
+@app.route('/xmen/<int:id>/edit/', methods=('GET', 'POST'))
+def edit(id):
+    mutante_edit = get_mutante(id)
+    if request.method=="POST":
+        nome = request.form["nome"]
+        codinome = request.form["codinome"]
+        
+        arquivo = request.files['imagem']
+        arquivo_nome = arquivo.filename
+        arquivo_extensao = arquivo_nome.rsplit('.', 1)[1].lower()
+        imagem = str(uuid.uuid4()) +'.'+ arquivo_extensao
+        arquivo.save(os.path.join(app.config['UPLOAD_FOLDER'], imagem))
+
+        if not nome:
+            flash("Nome é obrigatório!")
+        elif not codinome:
+            flash("Codinome é obrigatório!")
+        else:
+            conn = get_db_connection()
+            conn.execute('UPDATE mutantes SET nome = ?, codinome = ?, imagem = ?'
+                            ' WHERE id = ?',
+                            (nome, codinome, imagem, id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('index'))
+
+    return render_template('edita.html', mutante=mutante_edit)
+
+@app.route('/xmen/<int:id>/', methods=('GET', 'POST'))
+def detail(id):
+    mutante_view = get_mutante(id)
+    return render_template('detalhe.html', mutante=mutante_view)
+
+@app.route('/xmen/<int:id>/delete/', methods=('POST',))
+def delete(id):
+    mutante = get_mutante(id)
+    conn = get_db_connection()
+    conn.execute('DELETE FROM mutantes WHERE id = ?', (id,))
+    conn.commit()
+    conn.close()
+    flash('"{}" excluído com sucesso!'.format(mutante['codinome']))
+    return redirect(url_for('index'))
